@@ -40,7 +40,7 @@ void adventurerFunc(int currentPlayer, struct gameState* state){
 	int temphand[MAX_HAND];
 	int z = 0;
 
-	while(drawntreasure<2){ // while drawn treasure is less than 2
+	while(drawntreasure<2){ 
 		if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 			shuffle(currentPlayer, state);
 		}
@@ -48,25 +48,26 @@ void adventurerFunc(int currentPlayer, struct gameState* state){
 		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
 		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold) //card is treasure
 			drawntreasure++;
-		else{ //else not treasure
+		else{ 
 			temphand[z]=cardDrawn; //store in temp hand
 		  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
 		  z++; //increment element pointer
 		}
 	}
-	while(z-1>=0){ //while temp hand has at least one card
+	while(z-1>0){ 
 		state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 		z=z-1;
 	}
 }
 
 void smithyFunc(int currentPlayer, struct gameState* state, int handPos){
-        int i;
-            for (i = 0; i < 3; i++){
-              drawCard(currentPlayer, state);
-            }
-            //discard card from hand
-            discardCard(handPos, currentPlayer, state, 0);
+	int i;
+	for (i = 0; i < 3; i++)
+{
+drawCard(currentPlayer, state);
+	//discard card from hand
+	discardCard(handPos, currentPlayer, state, 0);
+   }
 }
 
 void villageFunc(int currentPlayer, struct gameState* state, int handPos){
@@ -74,13 +75,13 @@ void villageFunc(int currentPlayer, struct gameState* state, int handPos){
 	//+2 Actions
 	state->numActions = state->numActions + 2;
 	//discard played card from hand
-	discardCard(handPos, currentPlayer, state, 0);
+	discardCard(handPos, currentPlayer, state, 1);
 }
 
 int embargoFunc(int currentPlayer, struct gameState* state, int handPos, int choice1){
 	state->coins = state->coins + 2;                  
 	//see if selected pile is in play}
-	 if ( state->supplyCount[choice1] == -1 ){
+	 if ( state->supplyCount[choice1] = -1 ){
 		return -1;
 	}
 	//add embargo token to selected supply pile
