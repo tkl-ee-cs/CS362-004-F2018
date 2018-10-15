@@ -90,8 +90,10 @@ int embargoFunc(int currentPlayer, struct gameState* state, int handPos, int cho
 	return 0;
 }
 
-
-
+void outpostFunc(int currentPlayer, struct gameState* state, int handPos){
+	state->outpostPlayed++;
+	discardCard(handPos, currentPlayer, state, 0);
+}
 
 int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 		   struct gameState *state) {
@@ -1224,11 +1226,14 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return z;
 		
     case outpost:
+	outpostFunc(currentPlayer, state, handPos);
+	/*
       //set outpost flag
       state->outpostPlayed++;
 			
       //discard card
       discardCard(handPos, currentPlayer, state, 0);
+	*/
       return 0;
 		
     case salvager:
