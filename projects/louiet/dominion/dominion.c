@@ -34,6 +34,41 @@ int* kingdomCards(int k1, int k2, int k3, int k4, int k5, int k6, int k7,
   return k;
 }
 
+void adventurerFunc(int currentPlayer, struct gameState* state){
+	int drawntreasure=0;
+	int cardDrawn;
+	int temphand[MAX_HAND];
+	int z = 0;
+
+	while(drawntreasure<2){ // while drawn treasure is less than 2
+		if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
+			shuffle(currentPlayer, state);
+		}
+		drawCard(currentPlayer, state); //draw a card
+		cardDrawn = state->hand[currentPlayer][state->handCount[currentPlayer]-1];//top card of hand is most recently drawn card.
+		if (cardDrawn == copper || cardDrawn == silver || cardDrawn == gold) //card is treasure
+			drawntreasure++;
+		else{ //else not treasure
+			temphand[z]=cardDrawn; //store in temp hand
+		  state->handCount[currentPlayer]--; //this should just remove the top card (the most recently drawn one).
+		  z++; //increment element pointer
+		}
+	}
+	while(z-1>=0){ //while temp hand has at least one card
+		state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
+		z=z-1;
+	}
+}
+
+void smithyFunc(){
+//
+}
+
+void embargoFunc(){
+//
+}
+
+
 int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
 		   struct gameState *state) {
 
@@ -655,19 +690,20 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
   int tributeRevealedCards[2] = {-1, -1};
   int temphand[MAX_HAND];// moved above the if statement
-  int drawntreasure=0;
-  int cardDrawn;
-  int z = 0;// this is the counter for the temp hand
+  //int drawntreasure=0;
+  //int cardDrawn;
+  //int z = 0;// this is the counter for the temp hand
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
   }
-  
-	
+  	
   //uses switch to select card and perform actions
   switch( card ) 
     {
     case adventurer:
-      while(drawntreasure<2){
+	adventurerFunc(currentPlayer,state);
+
+      /*while(drawntreasure<2){
 	if (state->deckCount[currentPlayer] <1){//if the deck is empty we need to shuffle discard and add to deck
 	  shuffle(currentPlayer, state);
 	}
@@ -684,7 +720,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       while(z-1>=0){
 	state->discard[currentPlayer][state->discardCount[currentPlayer]++]=temphand[z-1]; // discard all cards in play that have been drawn
 	z=z-1;
-      }
+      }*/
       return 0;
 			
     case council_room:
