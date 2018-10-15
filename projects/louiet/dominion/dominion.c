@@ -69,9 +69,28 @@ void smithyFunc(int currentPlayer, struct gameState* state, int handPos){
             discardCard(handPos, currentPlayer, state, 0);
 }
 
-void embargoFunc(){
-//
+void villageFunc(int currentPlayer, struct gameState* state, int handPos){
+	drawCard(currentPlayer, state);
+	//+2 Actions
+	state->numActions = state->numActions + 2;
+	//discard played card from hand
+	discardCard(handPos, currentPlayer, state, 0);
 }
+
+int embargoFunc(int currentPlayer, struct gameState* state, int handPos, int choice1){
+	state->coins = state->coins + 2;                  
+	//see if selected pile is in play}
+	 if ( state->supplyCount[choice1] == -1 ){
+		return -1;
+	}
+	//add embargo token to selected supply pile
+	state->embargoTokens[choice1]++;                  
+	//trash card
+	discardCard(handPos, currentPlayer, state, 1);  
+	return 0;
+}
+
+
 
 
 int initializeGame(int numPlayers, int kingdomCards[10], int randomSeed,
@@ -697,7 +716,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
   int temphand[MAX_HAND];// moved above the if statement
   //int drawntreasure=0;
   //int cardDrawn;
-  //int z = 0;// this is the counter for the temp hand
+  int z = 0;// this is the counter for the temp hand/embargo return val
   if (nextPlayer > (state->numPlayers - 1)){
     nextPlayer = 0;
   }
@@ -884,7 +903,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
       return 0;
 		
     case village:
-      //+1 Card
+	villageFunc(currentPlayer, state, handPos);
+/*      //+1 Card
       drawCard(currentPlayer, state);
 			
       //+2 Actions
@@ -892,6 +912,7 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
       //discard played card from hand
       discardCard(handPos, currentPlayer, state, 0);
+*/
       return 0;
 		
     case baron:
@@ -1183,6 +1204,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 
 		
     case embargo: 
+	z = embargoFunc(currentPlayer, state, handPos, choice1);
+	/*
       //+2 Coins
       state->coins = state->coins + 2;
 			
@@ -1197,7 +1220,8 @@ int cardEffect(int card, int choice1, int choice2, int choice3, struct gameState
 			
       //trash card
       discardCard(handPos, currentPlayer, state, 1);		
-      return 0;
+	*/
+      return z;
 		
     case outpost:
       //set outpost flag
