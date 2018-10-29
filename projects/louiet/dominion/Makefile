@@ -89,7 +89,7 @@ interface.o: interface.h interface.c
 	gcc -c interface.c -g  $(CFLAGS)
 
 testme: testme.c
-	gcc -o testme testme.c
+	gcc -o testme testme.c -g $(CFLAGS)
 
 runtests: testDrawCard 
 	./testDrawCard &> unittestresult.out

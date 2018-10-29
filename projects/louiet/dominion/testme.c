@@ -13,7 +13,7 @@ char *inputString(){
 	int size = 10;
 	str = (char*) malloc(size);
 	int i;
-	for(i = 0; i < strsize; i++) {
+	for(i = 0; i < size; i++) {
 		str[i] = (rand() % 26) + 97;
 	}
 	return str;
