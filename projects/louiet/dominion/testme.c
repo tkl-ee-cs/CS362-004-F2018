@@ -4,7 +4,7 @@
 #include<time.h>
 
 char inputChar(){
-	char c = (rand() % 96) + 32;
+	char c = (rand() % 96) + 32; //all characters after space
 	return c;
 }
 
@@ -14,7 +14,7 @@ char *inputString(){
 	str = (char*) malloc(size);
 	int i;
 	for(i = 0; i < size; i++) {
-		str[i] = (rand() % 26) + 97;
+		str[i] = (rand() % 97) + 32;
 	}
 	return str;
 }
