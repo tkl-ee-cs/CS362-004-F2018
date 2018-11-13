@@ -1,0 +1,15 @@
+Trenton Louie
+Random Quiz
+
+The first thing I did was survey what was given. I determined what was required to build the random tester. In this case it seemed the the random tester needed to fulfill certain conditions before it could be completed.
+
+It was noted our main focus was to complete two functions inputChar() and inputString(). Both functions fed into the testme functions. The testme function required the characters and the string to be a specific set of values. Therefore we needed to determine what bounds were required for the random set. 
+
+To do this we needed to understand the ascii values of the characters. For inputChar() we needed characters from opposing side of the ascii table, a SPACE, which had a value of 32 and ‘}’ which had a value of 125. Similarly we knew that inputString() required the characters of a null-terminated string to have lowercase characters. This meant we only needed from ‘a’ to ‘z’, and a space for the null-terminator. Ensuring had a sufficiently narrow but encompassing bound would allow for the test to run within the required 5 minute limit. 
+
+Once we determined what the requirements of the two functions, we were able to start prepping the program to be tested. We then created the Makefile to compile, and finally to execute the program. I ran into some memory issues as I was using malloc over many iterations. To account for this, I had to include some free statement in the testme function to release the memory for future iterations.
+ 
+The below listed are the various iterations in order of each execution starting with the first. All occurred with the required 5 minutes.
+
+Iterations: 7247526, 7881954, 688615, 3369268, 5944481
+
