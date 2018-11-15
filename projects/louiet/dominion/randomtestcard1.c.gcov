@@ -1,0 +1,135 @@
+        -:    0:Source:randomtestcard1.c
+        -:    0:Graph:randomtestcard1.gcno
+        -:    0:Data:randomtestcard1.gcda
+        -:    0:Runs:1
+        -:    0:Programs:1
+        -:    1:#include "dominion.h"
+        -:    2:#include "dominion_helpers.h"
+        -:    3:#include "rngs.h"
+        -:    4:#include <stdio.h>
+        -:    5:#include <math.h>
+        -:    6:#include <stdlib.h>
+        -:    7:#include <string.h>
+        -:    8:#include <time.h>
+        -:    9:#include <math.h>
+        -:   10:
+        -:   11:#define TESTCARD "Smithy"
+        -:   12:#define TESTNUM 1000
+        -:   13:
+        -:   14:
+function smithyCheck called 1000 returned 100% blocks executed 72%
+     1000:   15:void smithyCheck(int thisPlayer, struct gameState *post, int* fails, int failsize){
+        -:   16:
+        -:   17:	struct gameState pre;
+     1000:   18:	memcpy(&pre, post, sizeof(struct gameState));
+        -:   19:
+        -:   20:
+     1000:   21:	int handpos = 0, choice1 = 0, choice2 = 0, choice3 = 0, bonus = 0;
+     1000:   22:	int retval = cardEffect(smithy, choice1, choice2, choice3, post, handpos, &bonus); // run card function
+call    0 returned 100%
+        -:   23:
+     1000:   24:	int preHC = pre.handCount[thisPlayer];
+        -:   25:	//int preDeC = pre.deckCount[thisPlayer];
+        -:   26:
+        -:   27:	//int newCards = 3;
+        -:   28:	//int discarded = 1;
+        -:   29:
+     1000:   30:	int val1 = drawCard(thisPlayer, &pre);
+call    0 returned 100%
+     1000:   31:	if (val1 < 0) // test for successful draw
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   32:		fails[0]++;
+        -:   33:
+     1000:   34:	int val2 = drawCard(thisPlayer, &pre);
+call    0 returned 100%
+     1000:   35:	if (val2 < 0) // test for successful draw
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   36:		fails[0]++;
+        -:   37:
+     1000:   38:	int val3 = drawCard(thisPlayer, &pre);
+call    0 returned 100%
+     1000:   39:	if (val3 < 0) // test for successful draw
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   40:		fails[0]++;
+        -:   41:
+     1000:   42:	int disval = discardCard(0, thisPlayer, &pre, 0);
+call    0 returned 100%
+     1000:   43:	if(disval)// test for successful discard
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   44:		fails[1]++;
+        -:   45:
+     1000:   46:	if (retval)// test for successful Effect
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   47:		fails[2]++;
+        -:   48:
+     1000:   49:	int postHC = post->handCount[thisPlayer];
+        -:   50:	//int postDeC = post->deckCount[thisPlayer];
+     1000:   51:	if (!(preHC <= postHC - 1)) //hand count check
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+     1000:   52:		fails[3]++;
+     1000:   53:}
+        -:   54:
+        -:   55:
+function main called 1 returned 100% blocks executed 100%
+        1:   56:int main(){
+        1:   57:	printf("--- Testing Card: %s ---\n", TESTCARD);
+call    0 returned 100%
+        -:   58:
+        1:   59:	srand((unsigned int)(time(NULL)));
+call    0 returned 100%
+call    1 returned 100%
+        -:   60:	struct gameState G; 
+        -:   61:
+        1:   62:	int thisPlayer = 0;
+        1:   63:	int fails[5] = {0,0,0,0,0};
+        -:   64:	
+        -:   65:	int i,j;
+     1001:   66:	for(i=0; i<TESTNUM; i++){ //for random test loop
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+        -:   67:	
+ 26301000:   68:		for (j = 0; j < sizeof(struct gameState); j++)
+branch  0 taken 99%
+branch  1 taken 1% (fallthrough)
+ 26300000:   69:			((char*)&G)[j] = floor(Random() * 256);
+call    0 returned 100%
+        -:   70:		
+     1000:   71:		thisPlayer = floor(Random() * MAX_PLAYERS);
+call    0 returned 100%
+     1000:   72:		G.deckCount[thisPlayer] = floor(Random() * MAX_DECK);
+call    0 returned 100%
+     1000:   73:		G.discardCount[thisPlayer] = floor(Random() * MAX_DECK);
+call    0 returned 100%
+     1000:   74:		G.handCount[thisPlayer] = floor(Random() * MAX_HAND);
+call    0 returned 100%
+     1000:   75:		G.playedCardCount = floor(Random() * (MAX_DECK - 1));
+call    0 returned 100%
+     1000:   76:		G.whoseTurn = thisPlayer;
+        -:   77:
+     1000:   78:		smithyCheck(thisPlayer, &G, fails, 5); // call check function
+call    0 returned 100%
+        -:   79:	}
+        -:   80:
+        1:   81:	int allfails = fails[0] + fails[1] + fails[2] + fails[3] + fails[4]; // gather results
+        -:   82:
+        1:   83:	printf("TOTAL TEST FAILED: %d\n", allfails);
+call    0 returned 100%
+        1:   84:	printf("drawCard failed: %d\n", fails[0]);
+call    0 returned 100%
+        1:   85:	printf("discardCard failed: %d\n", fails[1]);
+call    0 returned 100%
+        1:   86:	printf("CardEffect failed: %d\n", fails[2]);
+call    0 returned 100%
+        1:   87:	printf("Hand fails: %d\n", fails[3]);
+call    0 returned 100%
+        -:   88:	//printf("Other fails: %d\n", fails[4]);
+        1:   89:	printf("\n");
+call    0 returned 100%
+        1:   90:	return 0;
+        -:   91:}

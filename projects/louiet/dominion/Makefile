@@ -70,6 +70,26 @@ unittestresults: testGainCard testDiscardCard ShuffleTest testisGameOver dominio
 	gcov -b cardtest4.c >> unittestresults.out
 #	cat cardtest4.c.gcov >> unittestresults.out
 
+randomtestcard1: randomtestcard1.c dominion.o rngs.o
+	gcc -o randomtestcard1 -g randomtestcard1.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard1 > randomtestcard1.out
+	gcov -f -b randomtestcard1.c >> randomtestcard1.out
+	cat randomtestcard1.c.gcov >> randomtestcard1.out
+
+randomtestcard2: randomtestcard2.c dominion.o rngs.o
+	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
+	./randomtestcard2 > randomtestcard2.out
+	gcov -f -b randomtestcard2.c >> randomtestcard2.out
+#	cat randomtestcard2.c.gcov >> randomtestcard2.out
+
+randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
+	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
+	./randomtestadventurer > randomtestadventurer.out
+	gcov -f -b randomtestadventurer.c >> randomtestadventurer.out
+#	cat randomtestcard2.c.gcov >> randomtestcard2.out
+
+randomtest: randomtestcard1 randomtestcard2 randomtestadventurer
+
 playdom: dominion.o playdom.c
 	gcc -o playdom playdom.c -g dominion.o rngs.o $(CFLAGS)
 #To run playdom you need to entere: ./playdom <any integer number> like ./playdom 10*/

@@ -67,7 +67,7 @@ void smithyFunc(int currentPlayer, struct gameState* state, int handPos){
 drawCard(currentPlayer, state);
 	//discard card from hand
 	discardCard(handPos, currentPlayer, state, 0);
-   }
+}   
 }
 
 void villageFunc(int currentPlayer, struct gameState* state, int handPos){
