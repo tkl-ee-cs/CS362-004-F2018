@@ -41,6 +41,8 @@ void ghallCheck(int thisPlayer, struct gameState *post, int* fails, int failsize
 
         if (preDeC - 1 == postDeC)
                 fails[0]++;
+	else if (preDeC == 0 && postDeC == pre.discardCount[thisPlayer] - 1)
+		fails[0]++;
         else
                 fails[4]++;
 

@@ -86,7 +86,7 @@ randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)
 	./randomtestadventurer > randomtestadventurer.out
 	gcov -f -b randomtestadventurer.c >> randomtestadventurer.out
-#	cat randomtestcard2.c.gcov >> randomtestcard2.out
+	cat randomtestadventurer.c.gcov >> randomtestadventurer.out
 
 randomtest: randomtestcard1 randomtestcard2 randomtestadventurer
 
@@ -119,9 +119,9 @@ player: player.c interface.o
 
 all: playdom player 
 
-cleanall: tests clean
+cleanall: cleantests clean
 
-tests:
-	rm -f unittest1 unittest2 unittest3 unittest4 testDiscardCard testGainCard ShuffleTest testisGameOver cardtest1 cardtest2 cardtest3 cardtest4
+cleantests:
+	rm -f randomtestcard1 randomtestcard2 randomtestadventurer anittest1 unittest2 unittest3 unittest4 testDiscardCard testGainCard ShuffleTest testisGameOver cardtest1 cardtest2 cardtest3 cardtest4
 clean:
 	rm -f *.o playdom.exe playdom player player.exe  *.gcov *.gcda *.gcno *.so *.out testDrawCard testDrawCard.exe
