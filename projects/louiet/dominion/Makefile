@@ -80,7 +80,7 @@ randomtestcard2: randomtestcard2.c dominion.o rngs.o
 	gcc -o randomtestcard2 -g randomtestcard2.c dominion.o rngs.o $(CFLAGS)
 	./randomtestcard2 > randomtestcard2.out
 	gcov -f -b randomtestcard2.c >> randomtestcard2.out
-#	cat randomtestcard2.c.gcov >> randomtestcard2.out
+	cat randomtestcard2.c.gcov >> randomtestcard2.out
 
 randomtestadventurer: randomtestadventurer.c dominion.o rngs.o
 	gcc -o randomtestadventurer -g randomtestadventurer.c dominion.o rngs.o $(CFLAGS)

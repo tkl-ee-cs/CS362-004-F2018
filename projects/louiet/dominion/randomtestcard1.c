@@ -30,26 +30,36 @@ void smithyCheck(int thisPlayer, struct gameState *post, int* fails, int failsiz
 	int val1 = drawCard(thisPlayer, &pre);
 	if (val1 < 0) // test for successful draw
 		fails[0]++;
-
+	else
+		fails[4]++;
 	int val2 = drawCard(thisPlayer, &pre);
 	if (val2 < 0) // test for successful draw
 		fails[0]++;
-
+	else 
+		fails[4]++;
 	int val3 = drawCard(thisPlayer, &pre);
 	if (val3 < 0) // test for successful draw
 		fails[0]++;
+	else
+		fails[4]++;
 
 	int disval = discardCard(0, thisPlayer, &pre, 0);
 	if(disval)// test for successful discard
 		fails[1]++;
+	else
+		fails[4]++;
 
 	if (retval)// test for successful Effect
 		fails[2]++;
+	else
+		fails[4]++;
 
 	int postHC = post->handCount[thisPlayer];
 	//int postDeC = post->deckCount[thisPlayer];
 	if (!(preHC <= postHC - 1)) //hand count check
 		fails[3]++;
+	else
+		fails[4]++;
 }
 
 
@@ -78,14 +88,11 @@ int main(){
 		smithyCheck(thisPlayer, &G, fails, 5); // call check function
 	}
 
-	int allfails = fails[0] + fails[1] + fails[2] + fails[3] + fails[4]; // gather results
-
-	printf("TOTAL TEST FAILED: %d\n", allfails);
+	printf("TOTAL TEST:\n");
 	printf("drawCard failed: %d\n", fails[0]);
 	printf("discardCard failed: %d\n", fails[1]);
 	printf("CardEffect failed: %d\n", fails[2]);
 	printf("Hand fails: %d\n", fails[3]);
-	//printf("Other fails: %d\n", fails[4]);
 	printf("\n");
 	return 0;
 }

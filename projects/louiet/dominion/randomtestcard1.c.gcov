@@ -17,7 +17,7 @@
         -:   12:#define TESTNUM 1000
         -:   13:
         -:   14:
-function smithyCheck called 1000 returned 100% blocks executed 72%
+function smithyCheck called 1000 returned 100% blocks executed 67%
      1000:   15:void smithyCheck(int thisPlayer, struct gameState *post, int* fails, int failsize){
         -:   16:
         -:   17:	struct gameState pre;
@@ -36,100 +36,117 @@ call    0 returned 100%
         -:   29:
      1000:   30:	int val1 = drawCard(thisPlayer, &pre);
 call    0 returned 100%
-     1000:   31:	if (val1 < 0) // test for successful draw
-branch  0 taken 0% (fallthrough)
-branch  1 taken 100%
-    #####:   32:		fails[0]++;
-        -:   33:
-     1000:   34:	int val2 = drawCard(thisPlayer, &pre);
-call    0 returned 100%
-     1000:   35:	if (val2 < 0) // test for successful draw
-branch  0 taken 0% (fallthrough)
-branch  1 taken 100%
-    #####:   36:		fails[0]++;
-        -:   37:
-     1000:   38:	int val3 = drawCard(thisPlayer, &pre);
-call    0 returned 100%
-     1000:   39:	if (val3 < 0) // test for successful draw
-branch  0 taken 0% (fallthrough)
-branch  1 taken 100%
-    #####:   40:		fails[0]++;
-        -:   41:
-     1000:   42:	int disval = discardCard(0, thisPlayer, &pre, 0);
-call    0 returned 100%
-     1000:   43:	if(disval)// test for successful discard
-branch  0 taken 0% (fallthrough)
-branch  1 taken 100%
-    #####:   44:		fails[1]++;
-        -:   45:
-     1000:   46:	if (retval)// test for successful Effect
-branch  0 taken 0% (fallthrough)
-branch  1 taken 100%
-    #####:   47:		fails[2]++;
-        -:   48:
-     1000:   49:	int postHC = post->handCount[thisPlayer];
-        -:   50:	//int postDeC = post->deckCount[thisPlayer];
-     1000:   51:	if (!(preHC <= postHC - 1)) //hand count check
+     1000:   31:	if (val1 == 0)
 branch  0 taken 100% (fallthrough)
 branch  1 taken 0%
-     1000:   52:		fails[3]++;
-     1000:   53:}
-        -:   54:
-        -:   55:
-function main called 1 returned 100% blocks executed 100%
-        1:   56:int main(){
-        1:   57:	printf("--- Testing Card: %s ---\n", TESTCARD);
+     1000:   32:	        fails[4]++;
+    #####:   33:	else if((val1 == -1) && (pre.deckCount[thisPlayer] == 0))
+branch  0 never executed
+branch  1 never executed
+branch  2 never executed
+branch  3 never executed
+    #####:   34:		fails[4]++;
+        -:   35:	else
+    #####:   36:		fails[0]++;
+        -:   37:
+        -:   38:
+     1000:   39:	int val2 = drawCard(thisPlayer, &pre);
 call    0 returned 100%
-        -:   58:
-        1:   59:	srand((unsigned int)(time(NULL)));
+     1000:   40:	if (val2 < 0) // test for successful draw
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   41:		fails[0]++;
+        -:   42:	else 
+     1000:   43:		fails[4]++;
+     1000:   44:	int val3 = drawCard(thisPlayer, &pre);
+call    0 returned 100%
+     1000:   45:	if (val3 < 0) // test for successful draw
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   46:		fails[0]++;
+        -:   47:	else
+     1000:   48:		fails[4]++;
+        -:   49:
+     1000:   50:	int disval = discardCard(0, thisPlayer, &pre, 0);
+call    0 returned 100%
+     1000:   51:	if(disval)// test for successful discard
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   52:		fails[1]++;
+        -:   53:	else
+     1000:   54:		fails[4]++;
+        -:   55:
+     1000:   56:	if (retval)// test for successful Effect
+branch  0 taken 0% (fallthrough)
+branch  1 taken 100%
+    #####:   57:		fails[2]++;
+        -:   58:	else
+     1000:   59:		fails[4]++;
+        -:   60:
+     1000:   61:	int postHC = post->handCount[thisPlayer];
+        -:   62:	//int postDeC = post->deckCount[thisPlayer];
+     1000:   63:	if (!(preHC <= postHC - 1)) //hand count check
+branch  0 taken 100% (fallthrough)
+branch  1 taken 0%
+     1000:   64:		fails[3]++;
+        -:   65:	else
+    #####:   66:		fails[4]++;
+     1000:   67:}
+        -:   68:
+        -:   69:
+function main called 1 returned 100% blocks executed 100%
+        1:   70:int main(){
+        1:   71:	printf("--- Testing Card: %s ---\n", TESTCARD);
+call    0 returned 100%
+        -:   72:
+        1:   73:	srand((unsigned int)(time(NULL)));
 call    0 returned 100%
 call    1 returned 100%
-        -:   60:	struct gameState G; 
-        -:   61:
-        1:   62:	int thisPlayer = 0;
-        1:   63:	int fails[5] = {0,0,0,0,0};
-        -:   64:	
-        -:   65:	int i,j;
-     1001:   66:	for(i=0; i<TESTNUM; i++){ //for random test loop
+        -:   74:	struct gameState G; 
+        -:   75:
+        1:   76:	int thisPlayer = 0;
+        1:   77:	int fails[5] = {0,0,0,0,0};
+        -:   78:	
+        -:   79:	int i,j;
+     1001:   80:	for(i=0; i<TESTNUM; i++){ //for random test loop
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
-        -:   67:	
- 26301000:   68:		for (j = 0; j < sizeof(struct gameState); j++)
+        -:   81:	
+ 26301000:   82:		for (j = 0; j < sizeof(struct gameState); j++)
 branch  0 taken 99%
 branch  1 taken 1% (fallthrough)
- 26300000:   69:			((char*)&G)[j] = floor(Random() * 256);
+ 26300000:   83:			((char*)&G)[j] = floor(Random() * 256);
 call    0 returned 100%
-        -:   70:		
-     1000:   71:		thisPlayer = floor(Random() * MAX_PLAYERS);
+        -:   84:		
+     1000:   85:		thisPlayer = floor(Random() * MAX_PLAYERS);
 call    0 returned 100%
-     1000:   72:		G.deckCount[thisPlayer] = floor(Random() * MAX_DECK);
+     1000:   86:		G.deckCount[thisPlayer] = floor(Random() * MAX_DECK);
 call    0 returned 100%
-     1000:   73:		G.discardCount[thisPlayer] = floor(Random() * MAX_DECK);
+     1000:   87:		G.discardCount[thisPlayer] = floor(Random() * MAX_DECK);
 call    0 returned 100%
-     1000:   74:		G.handCount[thisPlayer] = floor(Random() * MAX_HAND);
+     1000:   88:		G.handCount[thisPlayer] = floor(Random() * MAX_HAND);
 call    0 returned 100%
-     1000:   75:		G.playedCardCount = floor(Random() * (MAX_DECK - 1));
+     1000:   89:		G.playedCardCount = floor(Random() * (MAX_DECK - 1));
 call    0 returned 100%
-     1000:   76:		G.whoseTurn = thisPlayer;
-        -:   77:
-     1000:   78:		smithyCheck(thisPlayer, &G, fails, 5); // call check function
+     1000:   90:		G.whoseTurn = thisPlayer;
+        -:   91:
+     1000:   92:		smithyCheck(thisPlayer, &G, fails, 5); // call check function
 call    0 returned 100%
-        -:   79:	}
-        -:   80:
-        1:   81:	int allfails = fails[0] + fails[1] + fails[2] + fails[3] + fails[4]; // gather results
-        -:   82:
-        1:   83:	printf("TOTAL TEST FAILED: %d\n", allfails);
+        -:   93:	}
+        -:   94:
+        1:   95:	int allfails = fails[0] + fails[1] + fails[2] + fails[3]; // gather results
+        -:   96:
+        1:   97:	printf("TOTAL TEST FAILED: %d\n", allfails);
 call    0 returned 100%
-        1:   84:	printf("drawCard failed: %d\n", fails[0]);
+        1:   98:	printf("drawCard failed: %d\n", fails[0]);
 call    0 returned 100%
-        1:   85:	printf("discardCard failed: %d\n", fails[1]);
+        1:   99:	printf("discardCard failed: %d\n", fails[1]);
 call    0 returned 100%
-        1:   86:	printf("CardEffect failed: %d\n", fails[2]);
+        1:  100:	printf("CardEffect failed: %d\n", fails[2]);
 call    0 returned 100%
-        1:   87:	printf("Hand fails: %d\n", fails[3]);
+        1:  101:	printf("Hand fails: %d\n", fails[3]);
 call    0 returned 100%
-        -:   88:	//printf("Other fails: %d\n", fails[4]);
-        1:   89:	printf("\n");
+        1:  102:	printf("\n");
 call    0 returned 100%
-        1:   90:	return 0;
-        -:   91:}
+        1:  103:	return 0;
+        -:  104:}
